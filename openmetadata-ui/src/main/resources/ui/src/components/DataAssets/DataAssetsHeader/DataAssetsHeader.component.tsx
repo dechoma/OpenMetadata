@@ -12,7 +12,15 @@
  *  limitations under the License.
  */
 import Icon from '@ant-design/icons';
-import { Button, Col, Divider, Row, Space, Tooltip, Typography } from 'antd';
+import {
+  Button,
+  Col,
+  Divider,
+  Row,
+  Space,
+  Tooltip,
+  Typography,
+} from 'antd';
 import ButtonGroup from 'antd/lib/button/button-group';
 import { ReactComponent as EditIcon } from 'assets/svg/edit-new.svg';
 import { ReactComponent as IconExternalLink } from 'assets/svg/external-links.svg';
@@ -30,6 +38,7 @@ import { OwnerLabel } from 'components/common/OwnerLabel/OwnerLabel.component';
 import TierCard from 'components/common/TierCard/TierCard';
 import TitleBreadcrumb from 'components/common/title-breadcrumb/title-breadcrumb.component';
 import EntityHeaderTitle from 'components/Entity/EntityHeaderTitle/EntityHeaderTitle.component';
+import AccessRequestButton from 'components/AccessRequest/AccessRequest.component';
 import { useTourProvider } from 'components/TourProvider/TourProvider';
 import { FQN_SEPARATOR_CHAR } from 'constants/char.constants';
 import { DE_ACTIVE_COLOR, getDashboardDetailsPath } from 'constants/constants';
@@ -70,6 +79,7 @@ import {
   DataAssetsHeaderProps,
   DataAssetType,
 } from './DataAssetsHeader.interface';
+
 
 export const ExtraInfoLabel = ({
   label,
@@ -129,6 +139,8 @@ export const DataAssetsHeader = ({
   const { onCopyToClipBoard } = useClipboard(window.location.href);
   const [taskCount, setTaskCount] = useState(0);
   const history = useHistory();
+
+
   const icon = useMemo(
     () =>
       dataAsset?.serviceType ? (
@@ -450,7 +462,7 @@ export const DataAssetsHeader = ({
   const handleShareButtonClick = async () => {
     await onCopyToClipBoard();
     setCopyTooltip(t('message.copy-to-clipboard'));
-    setTimeout(() => setCopyTooltip(''), 2000);
+    setTimeout(() => setCopyTooltip(''), 3000);
   };
 
   return (
@@ -473,6 +485,13 @@ export const DataAssetsHeader = ({
             </Col>
             <Col span={24}>
               <div className="d-flex no-wrap">
+                <AccessRequestButton
+                  requesterId={USERId}
+                  entityOwnerId={dataAsset.owner?.id ?? ''}
+                  entityType={entityName}
+                  entityName={entityName}
+                />
+                <Divider className="self-center m-x-sm" type="vertical" />
                 <OwnerLabel
                   hasPermission={permissions.EditAll || permissions.EditOwner}
                   owner={dataAsset?.owner}
