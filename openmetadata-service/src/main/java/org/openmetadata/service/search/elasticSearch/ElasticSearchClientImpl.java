@@ -50,6 +50,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.RestHighLevelClientBuilder;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
@@ -1683,7 +1684,7 @@ public class ElasticSearchClientImpl implements SearchClient {
               requestConfigBuilder
                   .setConnectTimeout(esConfig.getConnectionTimeoutSecs() * 1000)
                   .setSocketTimeout(esConfig.getSocketTimeoutSecs() * 1000));
-      return new RestHighLevelClient(restClientBuilder);
+      return new RestHighLevelClientBuilder(restClientBuilder.build()).setApiCompatibilityMode(true).build();
     } catch (Exception e) {
       throw new ElasticsearchException("Failed to create elastic search client ", e);
     }
