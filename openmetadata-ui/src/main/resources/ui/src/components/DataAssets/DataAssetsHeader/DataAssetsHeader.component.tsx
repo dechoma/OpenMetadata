@@ -488,7 +488,7 @@ export const DataAssetsHeader = ({
                 <AccessRequestButton
                   requesterId={USERId}
                   entityOwnerId={dataAsset.owner?.id ?? ''}
-                  entityType={entityName}
+                  entityType={entityType}
                   entityName={entityName}
                 />
                 <Divider className="self-center m-x-sm" type="vertical" />
