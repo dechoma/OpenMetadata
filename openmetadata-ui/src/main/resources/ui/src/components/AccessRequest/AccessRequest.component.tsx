@@ -13,18 +13,18 @@
 
 import Icon from '@ant-design/icons';
 import {
-  Button,
-  Modal,
-  Typography,
+    Button,
+    Modal,
+    Typography
 } from 'antd';
-import { AxiosError } from 'axios';
-import { showErrorToast } from 'utils/ToastUtils';
 import { ReactComponent as GrantAccessIcon } from 'assets/svg/ic-request-access.svg';
-import React, { useEffect, useState } from 'react';
-import { getUserById } from 'rest/userAPI';
+import { AxiosError } from 'axios';
 import { User } from 'generated/entity/teams/user';
-import { AccessRequestButtonProps } from './AccessRequest.interface';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getUserById } from 'rest/userAPI';
+import { showErrorToast } from 'utils/ToastUtils';
+import { AccessRequestButtonProps } from './AccessRequest.interface';
 
 const AccessRequestButton = ({
   requesterId,
