@@ -12,11 +12,7 @@
  */
 
 import Icon from '@ant-design/icons';
-import {
-    Button,
-    Modal,
-    Typography
-} from 'antd';
+import { Button, Modal, Typography } from 'antd';
 import { ReactComponent as GrantAccessIcon } from 'assets/svg/ic-request-access.svg';
 import { AxiosError } from 'axios';
 import { User } from 'generated/entity/teams/user';
@@ -30,10 +26,8 @@ const AccessRequestButton = ({
   requesterId,
   entityOwnerId,
   entityType,
-  entityName
+  entityName,
 }: AccessRequestButtonProps) => {
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -41,7 +35,6 @@ const AccessRequestButton = ({
   const [requesterData, setRequesterData] = useState<User>({} as User);
   const [requestId, setRequestId] = useState<string>();
   const { t } = useTranslation();
-
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -66,22 +59,22 @@ const AccessRequestButton = ({
 
   const fetchOwnerData = () => {
     if (entityOwnerId) {
-    setOwnerData({} as User);
-    getUserById(entityOwnerId, 'profile')
-      .then((res) => {
-        if (res) {
-          setOwnerData(res);
-        } else {
-          throw t('server.unexpected-response');
-        }
-      })
-      .catch((err: AxiosError) => {
-        //this error is  raised when entity owner is an Team not an User
-        console.log(err)
-        setConfirmLoading(false);
-      })
-      .finally(() => setConfirmLoading(false));
-      };
+      setOwnerData({} as User);
+      getUserById(entityOwnerId, 'profile')
+        .then((res) => {
+          if (res) {
+            setOwnerData(res);
+          } else {
+            throw t('server.unexpected-response');
+          }
+        })
+        .catch((err: AxiosError) => {
+          //this error is  raised when entity owner is an Team not an User
+          console.log(err);
+          setConfirmLoading(false);
+        })
+        .finally(() => setConfirmLoading(false));
+    }
   };
   useEffect(() => {
     fetchOwnerData();
@@ -89,26 +82,26 @@ const AccessRequestButton = ({
 
   const fetchRequesterData = () => {
     if (requesterId) {
-    setOwnerData({} as User);
-    getUserById(requesterId, 'profile')
-      .then((res) => {
-        if (res) {
-          setRequesterData(res);
-        } else {
-          throw t('server.unexpected-response');
-        }
-      })
-      .catch((err: AxiosError) => {
-        showErrorToast(
-          err,
-          t('server.entity-fetch-error', {
-            entity: 'User Details',
-          })
-        );
-        setConfirmLoading(false);
-      })
-      .finally(() => setConfirmLoading(false));
-      };
+      setOwnerData({} as User);
+      getUserById(requesterId, 'profile')
+        .then((res) => {
+          if (res) {
+            setRequesterData(res);
+          } else {
+            throw t('server.unexpected-response');
+          }
+        })
+        .catch((err: AxiosError) => {
+          showErrorToast(
+            err,
+            t('server.entity-fetch-error', {
+              entity: 'User Details',
+            })
+          );
+          setConfirmLoading(false);
+        })
+        .finally(() => setConfirmLoading(false));
+    }
   };
   useEffect(() => {
     fetchRequesterData();
@@ -119,7 +112,6 @@ const AccessRequestButton = ({
       const requestOptions = {
         method: 'POST',
         headers: {
-          Authorization: 'Basic ' + btoa('datauser1:rules'),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -131,11 +123,11 @@ const AccessRequestButton = ({
               AssetRequested: {
                 ArtifactId: 'd32dd-2d2d',
                 CatalogId: 'sa23-232x-cc',
-                ConnectionPaths: entityName,
-                Name: entityType,
+                ConnectionPaths: entityType,
+                Name: entityName,
                 Approvers: [
                   {
-                    pyUserIdentifier: ownerData.id,
+                    pyUserIdentifier: 'hf35bf',
                     pyFullname: ownerData.displayName,
                     pyEmail1: ownerData.email,
                     pyFirstName: ownerData.name,
@@ -149,13 +141,12 @@ const AccessRequestButton = ({
       };
       const resp = await window
         .fetch(
-          'https://gsxxopp-dev.ing.net/prweb/api/v1/cases/',
+          'https://gsxxopp-dev.ing.net/prweb/api/ApprovalManagement/v1/cases/',
           requestOptions
         )
         .then((response) => response.json());
 
-      setRequestId(resp.id);
-
+      setRequestId(resp.json.ID);
       setConfirmLoading(false);
       setIsModalOpen(false);
       setIsModalOpen2(true);
@@ -165,43 +156,41 @@ const AccessRequestButton = ({
   };
 
   return (
-      <>
+    <>
       <Modal
-         title="You are requesting access to:"
-         confirmLoading={confirmLoading}
-         open={isModalOpen}
-         onOk={handleOk}
-         onCancel={handleCancel}>
-         <p>type: {entityType} </p>
-         <p>name: {entityName}</p>
-         <p>requester: {requesterData.displayName}</p>
-         <p>owner: {ownerData.displayName}</p>
-       </Modal>
-       <Modal
-         title="Your request was succesfully submited"
-         open={isModalOpen2}
-         onOk={handleOk2}
-         onCancel={handleCancel2}>
-         <p> Submitted approval workflow ID : {requestId} </p>
-         <p></p>
-         <p>
-           {' '}
-           <Typography.Link
-             href="https://gsxxopp-dev.ing.net/prweb/"
-             target="_blank"
-             style={{ fontSize: '16px' }}>
-             click here to open approval workflow manager
-           </Typography.Link>
-         </p>
-       </Modal>
-       <Button
-         icon={
-           <Icon component={GrantAccessIcon} height={18} width={18} />
-         }
-         onClick={showModal}>
-         <Typography.Text>Request Access</Typography.Text>
-       </Button>
-       </>
+        title="You are requesting access to:"
+        confirmLoading={confirmLoading}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}>
+        <p>type: {entityType} </p>
+        <p>name: {entityName}</p>
+        <p>requester: {requesterData.displayName}</p>
+        <p>owner: {ownerData.displayName}</p>
+      </Modal>
+      <Modal
+        title="Your request was succesfully submited"
+        open={isModalOpen2}
+        onOk={handleOk2}
+        onCancel={handleCancel2}>
+        <p> Submitted approval workflow ID : {requestId} </p>
+        <br></br>
+        <p>
+          {' '}
+          <Typography.Link
+            href="https://gsxxopp-dev.ing.net/prweb/"
+            target="_blank"
+            style={{ fontSize: '14px' }}>
+            click here to open approval workflow manager
+          </Typography.Link>
+        </p>
+      </Modal>
+      <Button
+        icon={<Icon component={GrantAccessIcon} height={18} width={18} />}
+        onClick={showModal}>
+        <Typography.Text>Request Access</Typography.Text>
+      </Button>
+    </>
   );
 };
 
