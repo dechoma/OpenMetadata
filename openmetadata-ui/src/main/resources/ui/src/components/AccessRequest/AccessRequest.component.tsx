@@ -141,12 +141,13 @@ const AccessRequestButton = ({
       };
       const resp = await window
         .fetch(
-          'https://gsxxopp-dev.ing.net/prweb/api/ApprovalManagement/v1/cases/',
+          'https://gsxxopp-dev.ing.net/prweb/api/ApprovalManagement/v1/cases',
           requestOptions
         )
         .then((response) => response.json());
 
-      setRequestId(resp.json.ID);
+      setRequestId(resp.ID);
+
       setConfirmLoading(false);
       setIsModalOpen(false);
       setIsModalOpen2(true);
@@ -178,7 +179,7 @@ const AccessRequestButton = ({
         <p>
           {' '}
           <Typography.Link
-            href="https://gsxxopp-dev.ing.net/prweb/"
+            href="https://gsxxopp-dev.ing.net/prweb/app/approvalmanagement_/"
             target="_blank"
             style={{ fontSize: '14px' }}>
             click here to open approval workflow manager
