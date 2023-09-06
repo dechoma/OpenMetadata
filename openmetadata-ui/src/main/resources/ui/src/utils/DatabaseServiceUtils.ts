@@ -43,6 +43,7 @@ import singleStoreConnection from '../jsons/connectionSchemas/connections/databa
 import snowflakeConnection from '../jsons/connectionSchemas/connections/database/snowflakeConnection.json';
 import sqliteConnection from '../jsons/connectionSchemas/connections/database/sqliteConnection.json';
 import trinoConnection from '../jsons/connectionSchemas/connections/database/trinoConnection.json';
+import trinodapConnection from '../jsons/connectionSchemas/connections/database/trinoDapConnection.json';
 import verticaConnection from '../jsons/connectionSchemas/connections/database/verticaConnection.json';
 
 export const getDatabaseConfig = (type: DatabaseServiceType) => {
@@ -171,6 +172,11 @@ export const getDatabaseConfig = (type: DatabaseServiceType) => {
     }
     case DatabaseServiceType.Trino: {
       schema = trinoConnection;
+
+      break;
+    }
+    case DatabaseServiceType.TrinoDAP: {
+      schema = trinodapConnection;
 
       break;
     }

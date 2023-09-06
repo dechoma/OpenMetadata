@@ -101,6 +101,7 @@ import {
   TABLEAU,
   TOPIC_DEFAULT,
   TRINO,
+  TRINODAP,
   VERTICA,
 } from '../constants/Services.constant';
 import { PROMISE_STATE } from '../enums/common.enum';
@@ -170,6 +171,9 @@ export const serviceTypeLogo = (type: string) => {
 
     case DatabaseServiceType.Trino:
       return TRINO;
+
+    case DatabaseServiceType.TrinoDAP:
+       return TRINODAP;
 
     case DatabaseServiceType.Glue:
       return GLUE;

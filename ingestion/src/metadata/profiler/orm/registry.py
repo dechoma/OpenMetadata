@@ -69,6 +69,7 @@ class Dialects(Enum):
     SQLite = "sqlite"
     Snowflake = "snowflake"
     Trino = "trino"
+    TrinoDap = "trino"
     Vertica = "vertica"
 
 
